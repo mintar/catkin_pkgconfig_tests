@@ -23,15 +23,7 @@ Vagrant.configure(2) do |config|
     sudo apt-get install -qq -y ros-$CI_ROS_DISTRO-std-msgs
     #sudo rosdep init
     #rosdep update
-
-    export CMAKE_PREFIX_PATH=/opt/ros/$CI_ROS_DISTRO
-    export CPATH=/opt/ros/$CI_ROS_DISTRO/include
-    export LD_LIBRARY_PATH=/opt/ros/$CI_ROS_DISTRO/lib:/opt/ros/$CI_ROS_DISTRO/lib/x86_64-linux-gnu
-    export PKG_CONFIG_PATH=/opt/ros/$CI_ROS_DISTRO/lib/pkgconfig:/opt/ros/$CI_ROS_DISTRO/lib/x86_64-linux-gnu/pkgconfig
-    export PYTHONPATH=/opt/ros/$CI_ROS_DISTRO/lib/python2.7/dist-packages
-    export PATH=/opt/ros/$CI_ROS_DISTRO/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    #export ROS_MASTER_URI=http://localhost:11311
-    #export ROS_PACKAGE_PATH=/opt/ros/$CI_ROS_DISTRO/share
+    source /opt/ros/$CI_ROS_DISTRO/setup.bash
 
     cp -ax /vagrant ~/
     cd ~/vagrant/test_project
