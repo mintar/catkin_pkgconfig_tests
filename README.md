@@ -17,6 +17,7 @@ The catkin-generated `*.pc` files are broken from kinetic onwards:
 | fedora23/kinetic |     ✘     |          ✔          |
 | fedora24/kinetic |     ✘     |          ✔          |
 | fedora26/lunar   |     ✘     |          ✔          |
+| jessie/kinetic   |     ✘     |          ✔          |
 
 * "compiles" means whether the `test_project` in this repo compiles and runs with the original `*.pc` files.
 * "compiles with hack" means whether the `test_project` compiles and runs after running the following command:
