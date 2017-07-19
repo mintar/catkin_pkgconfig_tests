@@ -1,0 +1,32 @@
+-- The C compiler identification is GNU 7.1.1
+-- The CXX compiler identification is GNU 7.1.1
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.3.8") 
+-- Checking for one of the modules 'std_msgs'
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/vagrant/vagrant/test_project/build
+Scanning dependencies of target main
+[ 50%] Building CXX object CMakeFiles/main.dir/main.cpp.o
+[100%] Linking CXX executable main
+/usr/bin/ld: cannot find -l:/usr/lib64/libboost_system.so
+/usr/bin/ld: cannot find -l:/usr/lib64/libboost_thread.so
+/usr/bin/ld: cannot find -l:/usr/lib64/libboost_chrono.so
+/usr/bin/ld: cannot find -l:/usr/lib64/libboost_date_time.so
+/usr/bin/ld: cannot find -l:/usr/lib64/libboost_atomic.so
+/usr/bin/ld: cannot find -l:/usr/lib64/libconsole_bridge.so
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/main.dir/build.make:95: main] Error 1
+make[1]: *** [CMakeFiles/Makefile2:68: CMakeFiles/main.dir/all] Error 2
+make: *** [Makefile:84: all] Error 2
