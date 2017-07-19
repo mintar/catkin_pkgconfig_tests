@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/xenial64"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+  end
+
+  $script = <<-SHELL
+    export CI_ROS_DISTRO="kinetic"
+
+    # fix annoying problem that sudo cannot resolve host ubuntu-xenial + times out
+    echo "127.0.0.1 $(hostname)" >> /tmp/prefix
+    cp /etc/hosts /tmp/hosts
+    sudo sh -c 'cat /tmp/prefix /tmp/hosts > /etc/hosts'
+
+    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+    sudo apt-get update -qq
+    sudo apt-get install -qq -y python-rosdep python-catkin-tools git build-essential cmake
+    sudo apt-get install -qq -y ros-$CI_ROS_DISTRO-std-msgs
+    #sudo rosdep init
+    #rosdep update
+
+    export CMAKE_PREFIX_PATH=/opt/ros/$CI_ROS_DISTRO
+    export CPATH=/opt/ros/$CI_ROS_DISTRO/include
+    export LD_LIBRARY_PATH=/opt/ros/$CI_ROS_DISTRO/lib:/opt/ros/$CI_ROS_DISTRO/lib/x86_64-linux-gnu
+    export PKG_CONFIG_PATH=/opt/ros/$CI_ROS_DISTRO/lib/pkgconfig:/opt/ros/$CI_ROS_DISTRO/lib/x86_64-linux-gnu/pkgconfig
+    export PYTHONPATH=/opt/ros/$CI_ROS_DISTRO/lib/python2.7/dist-packages
+    export PATH=/opt/ros/$CI_ROS_DISTRO/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    #export ROS_MASTER_URI=http://localhost:11311
+    #export ROS_PACKAGE_PATH=/opt/ros/$CI_ROS_DISTRO/share
+
+    cp -ax /vagrant ~/
+    cd ~/vagrant/test_project
+    git clean -dxf
+    mkdir build
+    cd build
+    #sudo find /opt/ros/$CI_ROS_DISTRO -name '*.pc' -exec sed -i -e 's/-l://g' {} \;
+    cmake ..
+    make
+    ./main
+  SHELL
+  config.vm.provision "shell", inline: $script, privileged: false
+end
